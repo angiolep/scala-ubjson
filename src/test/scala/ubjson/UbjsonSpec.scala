@@ -48,6 +48,21 @@ class UbjsonSpec extends FlatSpec with MustMatchers {
   }
 
 
+  it should """encode Scala ("привет": String) to Ubjson ("привет": string)""" in {
+    //     S     U    12           п           р           и           в           е           т
+    // [0x53, 0x55, 0x0C, 0xD0, 0xBF, 0xD1, 0x80, 0xD0, 0xB8, 0xD0, 0xB2, 0xD0, 0xB5, 0xD1, 0x82]
+    encode("привет") mustBe ubj("russian")
+  }
+
+
+  it should """encode Scala ("مرحبا": String) to Ubjson ("مرحبا": string)""" in {
+    //     S     U    10           ا            ب           ح           ر           م
+    // [0x53, 0x55, 0x0A, 0xD9, 0x85, 0xD8, 0xB1, 0xD8, 0xAD, 0xD8, 0xA8, 0xD8, 0xA7]
+    encode("مرحبا") mustBe ubj("arabic")
+  }
+
+
+
   private def ubj(filename: String): Array[Byte] = {
     import java.nio.file.{Files, Paths}
     val expected = Files.readAllBytes(Paths.get(s"src/test/resources/$filename.ubj"))

@@ -47,7 +47,10 @@ package object ubjson {
   }
 
   implicit def ubjsonString = new Ubjson[String] {
-    override def pack(x: String): Array[Byte] = utf8('S') ++ encode(x.length) ++ utf8(x)
+    override def pack(x: String): Array[Byte] = {
+      val string = utf8(x)
+      utf8('S') ++ encode(string.length) ++ string
+    }
   }
 
 
