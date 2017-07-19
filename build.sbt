@@ -1,11 +1,14 @@
+import Common._
 
-val scalatest = "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test"
+val core = project
+  .settings(coreSettings: _*)
 
-lazy val root = (project in file(".")).
-  settings(
-    name := "ubjson",
-    version := "0.1.0",
-    scalaVersion := "2.11.5",
-    libraryDependencies ++= Seq(scalatest)
-  )
+val examples = project
+  .settings(coreSettings: _*)
+  .dependsOn(core)
+
+
+val ubjson = (project in file("."))
+  .aggregate(core, examples)
+
 

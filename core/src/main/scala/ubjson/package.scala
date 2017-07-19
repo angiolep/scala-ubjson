@@ -1,30 +1,21 @@
 
 package object ubjson {
 
-  private def utf8(x: Char): Array[Byte] = {
-    utf8(new String(Array(x)))
-  }
-
-  private def utf8(x: String): Array[Byte] = {
-    x.getBytes("UTF-8")
-  }
-
-  private def uint8(x: Int): Array[Byte] = {
-    // (00000000 00000000 00000000 10100011).toByte => 10100011
-    Array(x.toByte)
-  }
-
-  private def int8(x: Int): Array[Byte] = {
-    uint8(x + 256)
-    // -93 + 256 = 163
-    // (00000000 00000000 00000000 10100011).toByte => 10100011
-    // (11111111 11111111 11111111 01011100)
-    // (00000000 00000000 00000000 00000001)
-    // (11111111 11111111 11111111 01011101)
-  }
+  def encode[A](x: A)(implicit ubjson: Ubjson[A]): Array[Byte] = ubjson.pack(x)
 
   trait Ubjson[A] {
     def pack(x: A): Array[Byte]
+  }
+
+  class Noop private()
+  object Noop { def apply() = new Noop()}
+
+  implicit def ubjsonNoop = new Ubjson[Noop] {
+    override def pack(x: Noop): Array[Byte] =  utf8('N')
+  }
+
+  implicit def ubjsonNull = new Ubjson[Null] {
+    override def pack(x: Null): Array[Byte] =  utf8('Z')
   }
 
   implicit def ubjsonBoolean = new Ubjson[Boolean] {
@@ -48,13 +39,17 @@ package object ubjson {
 
   implicit def ubjsonString = new Ubjson[String] {
     override def pack(x: String): Array[Byte] = {
-      val string = utf8(x)
-      utf8('S') ++ encode(string.length) ++ string
+      val bytes = utf8(x)
+      utf8('S') ++ encode(bytes.length) ++ bytes
     }
   }
 
 
-  def encode[A](x: A)(implicit ubjson: Ubjson[A]): Array[Byte] = ubjson.pack(x)
+  private def utf8(x: Char): Array[Byte] = utf8(new String(Array(x)))
 
+  private def utf8(x: String): Array[Byte] = x.getBytes("UTF-8")
 
+  private def uint8(x: Int): Array[Byte] = Array(x.toByte)
+
+  private def int8(x: Int): Array[Byte] = uint8(x + 256)
 }
