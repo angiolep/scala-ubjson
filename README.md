@@ -1,4 +1,6 @@
 # ubj
+
+[![Join the chat at https://gitter.im/angiolep/ubj](https://badges.gitter.im/angiolep/ubj.svg)](https://gitter.im/angiolep/ubj?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status][travis-image]][travis-url] [![CodeCov Status][codecov-image]][codecov-url] [![Gitter][gitter-image]][gitter-url] 
 
 The Universal Binary JSON library for the Java Virtual Machine
