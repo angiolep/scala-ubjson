@@ -7,8 +7,11 @@ val examples = project
   .settings(coreSettings: _*)
   .dependsOn(core)
 
+val docs = project
+  .settings(coreSettings: _*)
+  .dependsOn(core)
 
 val ubjson = (project in file("."))
-  .aggregate(core, examples)
+  .aggregate(core, examples, docs)
 
 

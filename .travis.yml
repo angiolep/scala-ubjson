@@ -1,0 +1,23 @@
+language: scala
+scala:
+  #TODO - 2.11.8
+  - 2.12.1
+jdk:
+  - oraclejdk8
+env:
+  - CODECOV_TOKEN=b7421e3a-0317-4044-bd21-3693bb7095cd
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage core/test
+  - sbt core/coverageReport
+  - sbt core/coverageAggregate
+sudo: false
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+before_cache:
+  # Tricks to avoid unnecessary cache updates
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt -name "*.lock" -delete
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

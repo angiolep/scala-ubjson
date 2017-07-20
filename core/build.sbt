@@ -1,12 +1,13 @@
-import Dependencies._
 
-name := "ubjson"
+name := "ubj"
 
 libraryDependencies ++= Seq (
-  // none
-) ++ Seq(
-  scalatest
-).map(_ % Test)
+  "org.scalatest" %% "scalatest" % "3.0.1" % Test,
+  "com.novocode" % "junit-interface" % "0.11" % Test,
+  "org.hamcrest" % "hamcrest-all" % "1.3"
+)
+
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 parallelExecution in Test := true
 
