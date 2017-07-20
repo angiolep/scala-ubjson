@@ -1,7 +1,7 @@
 # ubj
 [![Build Status][travis-image]][travis-url] [![CodeCov Status][codecov-image]][codecov-url] [![Gitter][gitter-image]][gitter-url] 
 
-Universal Binary JSON library for the Java Virtual Machine
+The Universal Binary JSON library for the Java Virtual Machine
 
 
 [travis-image]: https://travis-ci.org/angiolep/ubj.svg?branch=master

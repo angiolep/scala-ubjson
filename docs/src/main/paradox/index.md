@@ -1,2 +1,2 @@
 # ubj
-Universal Binary JSON library for the Java Virtual Machine
+The Universal Binary JSON library for the Java Virtual Machine

@@ -7,7 +7,7 @@ jdk:
 env:
   - CODECOV_TOKEN=b7421e3a-0317-4044-bd21-3693bb7095cd
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION clean coverage core/test
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage core/test core/doc docs/paradox
   - sbt core/coverageReport
   - sbt core/coverageAggregate
 sudo: false
@@ -21,3 +21,12 @@ before_cache:
   - find $HOME/.sbt -name "*.lock" -delete
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+#deploy:
+#  provider: pages
+#  skip_cleanup: true
+#  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+#  local_dir: docs/target/paradox/site
+#  repo: angiolep/angiolep.github.io
+#  target_branch: master
+#  on:
+#    branch: master
